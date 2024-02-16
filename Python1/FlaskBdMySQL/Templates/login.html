@@ -1,0 +1,22 @@
+{% extends 'base.html' %} <!-- herda de base.html -->
+
+{% block content %}
+    <h2>LOGIN</h2>
+    {% if error %}
+        <div>
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+    </div>
+    <button type="submit">LOGIN</button>
+    </form>
+{% endblock %}

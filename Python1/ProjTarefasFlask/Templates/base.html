@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App</title>
+</head>
+<body> 
+  <Nav>  
+    <ul>
+    {% if 'user_id' in session %}
+    {% if session['is_admin'] %}
+    <li>
+        <a href="{{ url_for('admin') }}">Admin Panel</a>
+    </li> 
+    {% endif %}
+    <li>
+        <a href="{{ url_for('user') }}">User Panel</a>
+    </li> 
+    {% else %}
+    <li>
+        <a href="{{ url_for('login') }}">Login Panel</a>
+    </li> 
+    {% endif %}
+    </ul>
+    {% if 'user_id' in session %}
+    logged in as {{ session['username'] }} | <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+  </Nav>  
+  <div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div>{{ message[1] }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %} 
+  </div>
+
+  <div>
+
+  </div>
+</body>
+</html>

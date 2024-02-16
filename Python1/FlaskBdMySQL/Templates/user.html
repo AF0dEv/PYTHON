@@ -1,0 +1,25 @@
+{% extends 'base.html' %} <!-- herda de base.html -->
+
+{% block content %}
+    <h2>USER PANEL</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>username</th>
+                <th>Password</th>
+                <th>Is Admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for user in users%}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[4] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   {% endblock %}
