@@ -1,4 +1,5 @@
-{% extends 'base.html' %} <!-- herda de base.html -->
+<link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
+{% include 'base.html' %} <!-- herda de base.html -->
 {% block content %}
     <h2>CHOOSE USER</h2>
     <form action="select_user" method="POST">

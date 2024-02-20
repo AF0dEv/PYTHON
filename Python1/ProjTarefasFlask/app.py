@@ -71,7 +71,7 @@ def admin():
         return redirect(url_for('login'))
 
 
-@app.route('/registo', methods = ['GET', 'POST'])
+@app.route('/registo', methods = ['POST'])
 def registo():
     if request.method == "POST":
         user = request.form.get('username')
@@ -108,6 +108,25 @@ def user():
     
     else:
         return redirect(url_for('login'))
+
+
+@app.route('/update',methods=['POST','GET'])
+def update():
+    if request.method == 'POST':
+        id_data = request.form['id']
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        db = connect_to_database()
+        cursor = db.cursor()
+        cursor.execute("""
+               UPDATE users
+               SET username=%s, password=%s, email=%s
+               WHERE id=%s
+            """, (username, password, email, id_data))
+        flash("Dados actualizados com sucesso!")
+        db.commit()
+        return redirect(url_for('Index'))
 
 
 @app.route('/logout')

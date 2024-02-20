@@ -1,5 +1,5 @@
-{% extends 'base.html' %} <!-- herda de base.html -->
-  
+<link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
+{% include 'base.html' %} <!-- herda de base.html -->
 {% block content %}
     <h2>LOGIN</h2>
     {% if error %}
@@ -18,6 +18,5 @@
         <input type="password" name="password" required>
     </div>
     <button type="submit">LOGIN</button>
-    <button onclick="window.location='/registo'" type="button">SIGN UP</button>
     </form>
 {% endblock %}

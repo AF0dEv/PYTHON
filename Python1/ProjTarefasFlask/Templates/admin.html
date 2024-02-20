@@ -1,29 +1,237 @@
-{% extends 'base.html' %} <!-- herda de base.html -->
+<link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
+{% include 'base.html' %} <!-- herda de base.html -->
+{% block body %}
 
-{% block content %}
-    <h2>ADMIN PANEL</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>username</th>
-                <th>Email</th>
-                <th>Is Admin</th>
-            </tr>
-        </thead>
-        <tbody>
-            {%for user in users%}
-                <tr>
-                    <td>{{ user[0] }}</td>
-                    <td>{{ user[1] }}</td>
-                    <td>{{ user[3] }}</td>
-                    <td>{{ user[4] }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div>
-        <button onclick="window.location='/deleteuser'" type="button">APAGAR USER</button>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col md-12">
+
+
+
+            <h2>Lista de Utilizadores <button type="button" class="btn btn-success  pull-right" data-toggle="modal" data-target="#myModal">Adicionar dados do Utilizador</button></h2>
+
+
+
+
+    {%with messages = get_flashed_messages()%}
+
+    {%if messages%}
+
+    {% for message in messages %}
+
+    <div class="alert alert-success alert-dismissable" role="alert">
+
+     <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+
+         <span aria-hidden="true">&times;</span>
+
+     </button>
+        {{message}}
+
+
     </div>
-   {% endblock %}
-s
+
+
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+
+
+
+
+            <table class="table table-striped">
+
+
+                <tr>
+              <th>Id</th>
+              <th>Nome</th>
+              <th>Password</th>
+              <th>Email</th>
+              <th>ADMIN</th>
+              <th>Action</th>
+
+
+          </tr>
+
+
+
+
+
+                {% for user in users %}
+                <tr>
+                    <td>{{user.0}}</td>
+                    <td>{{user.1}}</td>
+                    <td>{{user.2}}</td>
+                    <td>{{user.3}}</td>
+                    <td>{{user.4}}</td>
+                    <td>
+
+
+               <a href="/update/{{user.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{user.0}}">Editar</a>
+                <a href="/delete/{{ user.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('Tem a certeza que quer apagar?')">Apagar</a>
+
+                    </td>
+
+                </tr>
+
+                <div id="modaledit{{user.0}}" class="modal fade" role="dialog">
+
+
+   <div class="modal-dialog">
+
+
+      <div class="modal-content">
+
+
+         <div class="modal-header">
+
+
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+
+            <h4 class="modal-title">Actualizar Informação</h4>
+
+
+         </div>
+
+
+         <div class="modal-body">
+
+
+            <form action="{{ url_for('update') }}" method="POST">
+
+
+               <div class="form-group">
+
+                  <input type="hidden"  name="id" value="{{user.0}}">  
+
+                  <label>Nome:</label>
+
+                  <input type="text" class="form-control" name="username" value="{{user.1}}">
+
+
+               </div>
+
+
+
+               <div class="form-group">
+
+
+                  <label>Password:</label>
+
+                  <input type="text" class="form-control" name="password" value="{{user.2}}">
+
+
+               </div>
+
+
+               <div class="form-group">
+
+
+                  <label>Email:</label>
+
+                  <input type="text" class="form-control" name="email" value="{{user.3}}">
+
+
+               </div>
+
+            <div class="form-group">
+
+               <label>ADMIN?</label>
+               <input type="number" class="form-control" name="is_admin" value="{{user.4}}"
+
+            </div>
+
+               <div class="form-group">
+
+
+                  <button class="btn btn-primary" type="submit">Actualizar</button>
+
+
+               </div>
+
+
+            </form>
+
+
+         </div>
+
+
+         <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+
+</div>
+
+
+                {% endfor  %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+<!-- Modal -->
+
+
+<div id="myModal" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Por Favor Inserir Dados</h4>
+         </div>
+         <div class="modal-body">
+            <form action="{{ url_for('registo') }}" method="POST">
+               <div class="form-group">
+                  <label>Nome:</label>
+                  <input type="text" class="form-control" name="username" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Password:</label>
+                  <input type="text" class="form-control" name="password" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Email:</label>
+                  <input type="text" class="form-control" name="email" required="1">
+               </div>
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Inserir Dados</button>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+         </div>
+      </div>
+   </div>
+</div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+<script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
