@@ -6,6 +6,13 @@ app = Flask(__name__) # Determinar Caminho Raiz Aplicação
 app.config.from_pyfile('config.py') # Carregar Ficheiro de Configurações pelo ficheiro 'config.py'
 app.secret_key = 'secret' # Definir chave secreta da Aplicação Flask -> Utilizado para Assinar Cookies
 
+# previnir problemas com cache
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store'
+    return response
+
 def connect_to_database():
     return connect(
         user = mysql_database_user,

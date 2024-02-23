@@ -39,7 +39,7 @@
         
         {% else %}
         <!-- <li><a href="/registo"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
-        <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#myModalSignUp"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
         {% endif %}
         
        
@@ -58,7 +58,7 @@
   </div>
 
 
-  <div id="myModal" class="modal fade" role="dialog">
+  <div id="myModalSignUp" class="modal fade" role="dialog">
     <div class="modal-dialog">
        <div class="modal-content">
           <div class="modal-header">
@@ -92,6 +92,49 @@
  </div>
      </div>
  </div>
+
+ <div id="myModalAddUser" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Por Favor Inserir Dados</h4>
+         </div>
+         <div class="modal-body">
+            <form action="{{ url_for('registo') }}" method="POST">
+               <div class="form-group">
+                  <label>Nome:</label>
+                  <input type="text" class="form-control" name="username" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Password:</label>
+                  <input type="text" class="form-control" name="password" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Email:</label>
+                  <input type="text" class="form-control" name="email" required="1">
+               </div>
+               <div class="form-group">
+                  <label>ADMIN:</label>
+                  <input type="number" class="form-control" name="is_admin" required="1"
+               </div>
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Inserir Dados</button>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+         </div>
+      </div>
+   </div>
+</div>
+    </div>
+</div>
+
+
+
+
  {% endblock %}  
 
 </body>
