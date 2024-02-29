@@ -1,0 +1,23 @@
+<link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
+{% include 'base.html' %} <!-- herda de base.html -->
+    {% block content %}
+    <h2>TAREFAS</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Concluido</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for tarefa in tarefas%}
+                <tr>
+                    <td>{{ tarefa[0] }}</td>
+                    <td>{{ tarefa[1] }}</td>
+                    <td>{{ tarefa[2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   {% endblock %}

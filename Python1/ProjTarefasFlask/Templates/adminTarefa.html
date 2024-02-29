@@ -1,20 +1,82 @@
 <link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
 {% include 'base.html' %} <!-- herda de base.html -->
-{% block content %}
-    <h2>CHOOSE USER</h2>
-    <form action="select_user" method="POST">
-    {% if error %}
-        <div>
-            {{ error }}
-        </div>
-    {% endif %}
-    <ul>
-        {% for user in users %}
-            <li>
-                <input type="radio" name="select_user" value="{{ user.id }}"> {{user[0]}}
-            </li>
-        {% endfor %}
-    </ul>
-    </form>
-    {% endblock %}
+{% block body %}
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col md-12">
+
+
+
+            <h2>Lista de Utilizadores</h2>
+
+
+
+
+    {%with messages = get_flashed_messages()%}
+
+    {%if messages%}
+
+    {% for message in messages %}
+
+
+        {{message}}
+
+
+    </div>
+
+
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+
+
+
+
+            <table class="table table-striped">
+
+
+            <tr>
+              <th>Id</th>
+              <th>Nome</th>
+              <th>OPÇÃO</th>
+            </tr>
+
+
+
+
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{user.0}}</td>
+                    <td>{{user.1}}</td>
+                    <td>
+                         <a href="/userAdmin/{{ user.0 }}" class="btn btn-warning btn-xs">Selecionar</a>
+                         
+                    </td>
+                </tbody>
+                </tr>
+
+
+      </div>
+
+
+   </div>
+
+
+</div>
+
+
+{% endfor  %}
+
+{% endblock %}
+
+
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+<script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+
 

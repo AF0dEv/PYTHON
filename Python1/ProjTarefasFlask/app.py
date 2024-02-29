@@ -99,7 +99,7 @@ def user():
     if 'user_id' in session and session['is_admin']:
         db = connect_to_database()
         cursor = db.cursor()
-        cursor.execute('SELECT username FROM users WHERE is_admin = 0')
+        cursor.execute('SELECT user_id, username FROM users WHERE is_admin = 0')
         users = cursor.fetchall()
         return render_template('adminTarefa.html', users = users)
         
@@ -111,11 +111,38 @@ def user():
         
         cursor.execute('SELECT tarefa_id, descricao, concluido FROM tarefas WHERE id_user = %s', (user,))
         tarefas = cursor.fetchall()
-        return render_template('user.html', tarefas = tarefas)
+        return render_template('user.html', listaTarefas = tarefas)
     
     else:
         return redirect(url_for('login'))
 
+
+
+@app.route('/userAdmin/<int:id>', methods = ['GET', 'POST'])
+def userAdmin(id):
+    if 'user_id' in session and session['is_admin']:
+        db =  db = connect_to_database()
+        cursor = db.cursor()
+        user = id
+
+        cursor.execute('SELECT tarefa_id, descricao, concluido FROM tarefas WHERE id_user = %s', (user,))
+        tarefas = cursor.fetchall()
+        return render_template('userAdmin.html', tarefas = tarefas)
+    else:
+        return redirect(url_for('user'))
+
+
+
+@app.route('/adminTarefa', methods = ['GET', 'POST'])
+def adminTarefa():
+   db = connect_to_database()
+   cursor = db.cursor()
+   user = request.form.get('user_id')
+   cursor.execute('SELECT tarefa_id, descricao, concluido FROM tarefas WHERE id_user = %s', (user,))
+   tarefas = cursor.fetchall()
+   return render_template('userAdmin.html', tarefas = tarefas)
+
+                          
 
 @app.route('/update',methods=['POST','GET'])
 def update():
@@ -134,6 +161,26 @@ def update():
         flash("Dados actualizados com sucesso!")
         db.commit()
         return redirect(url_for('Index'))
+
+
+@app.route('/updateTarefa/<int:id>/<string:descricao>/<int:concluido>',methods=['POST','GET'])
+def updateTarefa(id, descricao, concluido):
+    if request.method == 'POST':
+        id_tarefa = id
+        desc = descricao
+        conc = concluido
+        if 'user_id' in session:
+            db = connect_to_database()
+            cursor = db.cursor()
+            cursor.execute("""
+                UPDATE tarefas
+                SET descricao=%s, concluido=%s
+                WHERE id=%s
+             """, (descricao, concluido, id_tarefa,))
+            flash("Dados actualizados com sucesso!")
+            db.commit()
+            return redirect(url_for('user'))
+    return redirect(url_for('Index'))
 
 
 @app.route('/logout')
