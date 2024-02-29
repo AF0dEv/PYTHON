@@ -1,5 +1,6 @@
 <link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{url_for('static', filename = 'css/toggle.css')}}" rel="stylesheet">
+
 {% include 'base.html' %} <!-- herda de base.html -->
     {% block content %}
     <h2>TAREFAS</h2>
@@ -13,14 +14,37 @@
             </tr>
         </thead>
         <tbody>
-            {%for tarefa in tarefas%}
+            {%for tarefa in listaTarefas%}
                 <tr>
                     <td>{{ tarefa[0] }}</td>
                     <td>{{ tarefa[1] }}</td>
-                    <td>{{ tarefa[2] }}</td>
+                    <td style="width: 100px;">
+                     
+                              {% if tarefa[2] == 1 %}
+                              <!-- Rounded switch -->
+                              <label class="switch">
+                                 <input type="checkbox" checked id="myCheckbox"  onchange="location.href = '/updateTarefa/{{tarefa[0]}}/{{tarefa[1]}}/0'">
+                                 <span class="slider round"></span>
+                               </label>
+
+                              {% endif %}
+                              {% if tarefa[2] == 0 %}
+                                
+                              <label class="switch">
+                                 <input type="checkbox" id="myCheckbox"  onchange="location.href = '/updateTarefa/{{tarefa[0]}}/{{tarefa[1]}}/1'">
+                                 <span class="slider round"></span>
+                               </label>
+                             
+                              {% endif %}
+                        </div>
+                               
+                    </td>
+
+
+
                     <td>
-                        <a href="/updateTarefa/{{tarefa.0}}" {% if tarefa.2 == 1 %}checked{% endif %} class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaleditTarefa{{tarefa.0}} ">Editar</a>
-                        <a href="/delete/{{tarefa.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('Tem a certeza que quer apagar?')">Apagar</a>
+                        <a href="/updateTarefa/{{tarefa.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaleditTarefa{{tarefa.0}} ">Editar</a>
+                        <a href="/deleteTask/{{tarefa.0}}" class="btn btn-danger btn-xs" onclick="return confirm('Tem a certeza que quer apagar? {{tarefa.0}}')">Apagar</a>
                     </td>
                 </tr>
 
@@ -48,35 +72,23 @@
                           <div class="modal-body">
                  
                  
-                             <form action="{{ url_for('updateTarefa'{{ user.0 }}}}" method="POST">
+                           <form action="updateDesc" method="POST">
                  
                  
                                 <div class="form-group">
                  
-                                   <input type="hidden"  name="id" value="{{tarefa.0}}">  
+                                   <input type="hidden"  name="id_tarefa" value="{{tarefa[0]}}">  
                  
                                    <label>Descrição:</label>
                  
-                                   <input type="text" class="form-control" name="descricao" value="{{tarefa.1}}">
+                                   <input type="text" class="form-control" name="descricao" value="{{tarefa[1]}}">
                  
                  
                                 </div>
                  
                  
                  
-                                <div class="form-group">
-                 
-                 
-                                   <label>Concluido:</label>
-                 
-                                   <!-- Rounded switch -->
-                                   <label class="switch">
-                                    <input type="checkbox" id="myCheckbox" onchange="updateCheckboxValue()">
-                                    <span class="slider round"></span>
-                                  </label>
-                 
-                 
-                                </div>
+                                
                  
                                 <div class="form-group">
                  
@@ -117,5 +129,3 @@
 <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
 
 <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
-
-<script type="text/javascript" src="{{url_for('static', filename = 'js/toggle.js')}}"></script>"

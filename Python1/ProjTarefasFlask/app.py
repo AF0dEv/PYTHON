@@ -156,16 +156,16 @@ def update():
         cursor.execute("""
                UPDATE users
                SET username=%s, password=%s, email=%s
-               WHERE id=%s
+               WHERE user_id=%s
             """, (username, password, email, id_data))
         flash("Dados actualizados com sucesso!")
         db.commit()
-        return redirect(url_for('Index'))
+        return redirect(url_for('admin'))
 
 
 @app.route('/updateTarefa/<int:id>/<string:descricao>/<int:concluido>',methods=['POST','GET'])
 def updateTarefa(id, descricao, concluido):
-    if request.method == 'POST':
+    if request.method == 'GET':
         id_tarefa = id
         desc = descricao
         conc = concluido
@@ -175,14 +175,49 @@ def updateTarefa(id, descricao, concluido):
             cursor.execute("""
                 UPDATE tarefas
                 SET descricao=%s, concluido=%s
-                WHERE id=%s
-             """, (descricao, concluido, id_tarefa,))
+                WHERE tarefa_id=%s
+             """, (desc, conc, id_tarefa,))
             flash("Dados actualizados com sucesso!")
             db.commit()
             return redirect(url_for('user'))
-    return redirect(url_for('Index'))
+    return redirect(url_for('index'))
 
 
+
+@app.route('/updateDesc',methods=['POST','GET'])
+def updateDesc():
+     if request.method == 'POST':
+        id = request.form['id_tarefa']
+        descricao = request.form['descricao']
+        db = connect_to_database()
+        cursor = db.cursor()
+        cursor.execute("""
+            UPDATE tarefas
+            SET descricao=%s
+            WHERE tarefa_id=%s
+         """, (descricao, id))
+        flash("Dados actualizados com sucesso!")
+        db.commit()
+        return redirect(url_for('user'))
+    
+    
+@app.route('/deleteTask/<int:tarefa_id>', methods=['POST','GET'])
+def deleteTask(tarefa_id):
+    if request.method == 'GET':
+        id_tarefa = int(tarefa_id)
+        db = connect_to_database()
+        cursor = db.cursor()
+        cursor.execute("""
+            DELETE FROM tarefas
+            WHERE tarefa_id=%s
+         """, (int(id_tarefa),))
+        flash("Dados actualizados com sucesso!")
+        db.commit()
+        return redirect(url_for('user'))
+    return redirect(url_for('user'))
+    
+    
+    
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
@@ -194,3 +229,5 @@ def logout():
 if __name__ == '__main__':
     app.run(debug=True) # serve para quando em desenvolvimento verificar erros no codigo
                         # em produçao retirar o debug
+
+# FALTA ADICIONAR POST, APAGAR USER, TAREFAS ADMIN
