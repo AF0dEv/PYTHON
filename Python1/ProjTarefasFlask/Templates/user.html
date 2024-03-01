@@ -3,7 +3,13 @@
 
 {% include 'base.html' %} <!-- herda de base.html -->
     {% block content %}
-    <h2>TAREFAS</h2>
+    <div class="container">
+
+      <div class="row">
+  
+          <div class="col md-12">
+
+    <h2>TAREFAS</h2> <button type="button" class="btn btn-success  pull-right" data-toggle="modal" data-target="#myModalAddTask">Adicionar Tarefa</button></h2>
     <table class="table table-striped">
         <thead>
 
@@ -44,9 +50,12 @@
 
                     <td>
                         <a href="/updateTarefa/{{tarefa.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaleditTarefa{{tarefa.0}} ">Editar</a>
-                        <a href="/deleteTask/{{tarefa.0}}" class="btn btn-danger btn-xs" onclick="return confirm('Tem a certeza que quer apagar? {{tarefa.0}}')">Apagar</a>
+                        <a href="/deleteTaskUser/{{tarefa.0}}" class="btn btn-danger btn-xs" onclick="return confirm('Tem a certeza que quer apagar?')">Apagar</a>
                     </td>
                 </tr>
+
+                
+
 
                 <div id="modaleditTarefa{{tarefa.0}}" class="modal fade" role="dialog">
 
@@ -121,6 +130,8 @@
                  
                  
                  </div>
+
+                
             {% endfor %}
         </tbody>
     </table>
