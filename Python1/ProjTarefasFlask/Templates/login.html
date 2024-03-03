@@ -4,11 +4,18 @@
 {% include 'base.html' %} <!-- herda de base.html -->
 {% block content %}
     <h2>LOGIN</h2>
-    {% if error %}
-        <div>
-            {{ error }}
-        </div>
+    {% with errors = [error] if error else [] %}
+    {% if errors %}
+        {% for error in errors %}
+            <div class="alert alert-danger alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ error }}
+            </div>
+        {% endfor %}
     {% endif %}
+{% endwith %}
 
     <form method="POST" >
     <div>

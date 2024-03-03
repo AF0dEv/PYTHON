@@ -1,6 +1,8 @@
 from flask import Flask, request, session, render_template, redirect, url_for, flash
 from mysql.connector import connect
 from config import *
+from flask import Flask, request, session, render_template, redirect, url_for, flash
+from mysql.connector import connect
 
 app = Flask(__name__) # Determinar Caminho Raiz Aplicação
 app.config.from_pyfile('config.py') # Carregar Ficheiro de Configurações pelo ficheiro 'config.py'

@@ -4,158 +4,92 @@
 {% block content %}
 <div class="container">
 
-  <div class="row">
+   <div class="row">
 
       <div class="col md-12">
-        {%for tarefa in listaTarefas%}
-<h2>TAREFAS</h2> <button type="button" class="btn btn-success  pull-right" data-toggle="modal" data-target="#myModalAddTaskAdmin">Adicionar Tarefa</button></h2>
-<table class="table table-striped">
-    <thead>
 
-        <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Concluido</th>
-            <th>USER</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-            <tr>
-                <td>{{ tarefa[0] }}</td>
-                <td>{{ tarefa[1] }}</td>
-                <td style="width: 100px;">
-                 
-                          {% if tarefa[2] == 1 %}
-                          <!-- Rounded switch -->
-                          <label class="switch">
-                             <input type="checkbox" checked id="myCheckbox"  onchange="location.href = '/updateTarefaAdmin/{{tarefa[0]}}/{{tarefa[1]}}/0/{{tarefa[3]}}'">
-                             <span class="slider round"></span>
-                           </label>
+         <h2>TAREFAS</h2> <button type="button" class="btn btn-success  pull-right" data-toggle="modal"
+            data-target="#myModalAddTaskAdmin">Adicionar Tarefa</button></h2>
+         <table class="table table-striped">
+            <thead>
 
-                          {% endif %}
-                          {% if tarefa[2] == 0 %}
-                            
-                          <label class="switch">
-                             <input type="checkbox" id="myCheckbox"  onchange="location.href = '/updateTarefaAdmin/{{tarefa[0]}}/{{tarefa[1]}}/1/{{tarefa[3]}}'">
-                             <span class="slider round"></span>
-                           </label>
-                         
-                          {% endif %}
-                </td>
-                <td>{{ tarefa[3] }}</td>
+               <tr>
+                  <th>ID</th>
+                  <th>Descrição</th>
+                  <th>Concluido</th>
+                  <th>USER</th>
+               </tr>
+            </thead>
+            <tbody>
+               {%for tarefa in listaTarefas%}
+               <tr>
+                  <td>{{ tarefa[0] }}</td>
+                  <td>{{ tarefa[1] }}</td>
+                  <td style="width: 100px;">
+
+                     {% if tarefa[2] == 1 %}
+                     <!-- Rounded switch -->
+                     <label class="switch">
+                        <input type="checkbox" checked id="myCheckbox"
+                           onchange="location.href = '/updateTarefaAdmin/{{tarefa[0]}}/{{tarefa[1]}}/0/{{tarefa[3]}}'">
+                        <span class="slider round"></span>
+                     </label>
+
+                     {% endif %}
+                     {% if tarefa[2] == 0 %}
+
+                     <label class="switch">
+                        <input type="checkbox" id="myCheckbox"
+                           onchange="location.href = '/updateTarefaAdmin/{{tarefa[0]}}/{{tarefa[1]}}/1/{{tarefa[3]}}'">
+                        <span class="slider round"></span>
+                     </label>
+
+                     {% endif %}
+                  </td>
+                  <td>{{ tarefa[3] }}</td>
 
 
-                <td>
-                    <a href="/updateTarefaAdmin/{{tarefa.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#ModalEditTarefaAdmin">Editar</a>
-                    <a href="/deleteTaskAdmin/{{tarefa.0}}/{{tarefa.3}}" class="btn btn-danger btn-xs" onclick="return confirm('Tem a certeza que quer apagar?')">Apagar</a>
-                </td>
-            </tr>
+                  <td>
+                     <a href="/updateTarefaAdmin/{{tarefa.0}}" class="btn btn-warning btn-xs edit-button" data-toggle="modal" data-target="#ModalEditTarefaAdmin" data-id="{{tarefa.0}}" data-descricao="{{tarefa[1]}}" data-user-id="{{tarefa[3]}}">Editar</a>
+                     <a href="/deleteTaskAdmin/{{tarefa.0}}/{{tarefa.3}}" class="btn btn-danger btn-xs"
+                        onclick="return confirm('Tem a certeza que quer apagar?')">Apagar</a>
+                  </td>
+               </tr>
 
-            <div id="myModalAddTaskAdmin" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                   <div class="modal-content">
-                      <div class="modal-header">
-                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                         <h4 class="modal-title">ADICIONAR TAREFA</h4>
-                      </div>
-                      <div class="modal-body">
-                         <form action="AddTask" method="POST">
-                            <div class="form-group">
-                               <label>Descrição:</label>
-                               <input type="text" class="form-control" name="descricao" required="1">
-                               <input type="hidden" name="user_id" value="{{tarefa[3]}}"
-                            </div>
-                            <div class="form-group">
-                               <button class="btn btn-primary" type="submit">ADICIONAR</button>
-                            </div>
-                         </form>
-                      </div>
-                      <div class="modal-footer">
-                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                      </div>
-                   </div>
-                </div>
-             </div>
-            
+               <div id="myModalAddTaskAdmin" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           <h4 class="modal-title">ADICIONAR TAREFA</h4>
+                        </div>
+                        <div class="modal-body">
+                           <form action="AddTask" method="POST">
+                              <div class="form-group">
+                                 <label>Descrição:</label>
+                                 <input type="text" class="form-control" name="descricao" required="1">
+                                 <input type="hidden" name="user_id" value="{{tarefa[3]}}" </div>
+                                 <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">ADICIONAR</button>
+                                 </div>
+                           </form>
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
 
-            <div id="ModalEditTarefaAdmin{{tarefa.0}}" class="modal fade" role="dialog">
-                <div class="modal-dialog"> 
-                   <div class="modal-content">
-             
-             
-                      <div class="modal-header">
-             
-             
-                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-             
-             
-                         <h4 class="modal-title">Actualizar Informação</h4>
-             
-             
-                      </div>
-             
-             
-                      <div class="modal-body">
-             
-             
-                       <form action="userAdminUpdateDescAdmin/{{tarefa[3]}}" method="POST">
-             
-             
-                            <div class="form-group">
-             
-                               <input type="hidden"  name="id_tarefa" value="{{tarefa[0]}}">  
-             
-                               <label>Descrição:</label>
-             
-                               <input type="text" class="form-control" name="descricao" value="{{tarefa[1]}}">
-                                
-                               <input type="hidden" name="user_id" value="{{tarefa[3]}}"
-             
-                            </div>
-             
-             
-             
-                            
-             
-                            <div class="form-group">
-             
-             
-                               <button class="btn btn-primary" type="submit">Actualizar</button>
-             
-             
-                            </div>
-             
-             
-                         </form>
-             
-             
-                      </div>
-             
-             
-                      <div class="modal-footer">
-             
-             
-                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-             
-             
-                      </div>
-             
-             
-                   </div>
-             
-             
-                </div>
-             
-             
-             </div>
 
-            
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+              
 
-<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+               {% endfor %}
 
-<script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+            </tbody>
+         </table>
+         {% endblock %}
+
+         <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+         <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
