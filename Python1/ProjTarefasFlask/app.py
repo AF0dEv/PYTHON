@@ -132,54 +132,58 @@ def userAdmin(id_user):
         return render_template('userAdmin.html', listaTarefas = tarefas)
     else:
         return redirect(url_for('user'))
+    
 
 
 
 @app.route('/adminTarefa/<int:id_user>', methods = ['GET', 'POST'])
 def adminTarefa(id_user):
-   db = connect_to_database()
-   cursor = db.cursor()
-   user = id_user
-   cursor.execute('SELECT tarefa_id, descricao, concluido FROM tarefas WHERE id_user = %s', (user,))
-   tarefas = cursor.fetchall()
-   return render_template('userAdmin.html', tarefas = tarefas)
+    if 'user_id' in session and session['is_admin']:
+        db = connect_to_database()
+        cursor = db.cursor()
+        user = id_user
+        cursor.execute('SELECT tarefa_id, descricao, concluido FROM tarefas WHERE id_user = %s', (user,))
+        tarefas = cursor.fetchall()
+        return render_template('userAdmin.html', tarefas = tarefas)
 
                           
 
 @app.route('/updateUser/<int:id_user>',methods=['POST','GET'])
 def updateUser(id_user):
-    if request.method == 'POST':
-        user_id = id_user
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        is_admin = request.form['is_admin']
-        db = connect_to_database()
-        cursor = db.cursor()
-        cursor.execute("""
-               UPDATE users
-               SET username=%s, password=%s, email=%s, is_admin=%s
-               WHERE user_id=%s
-            """, (username, password, email, is_admin, user_id))
-        flash("Dados actualizados com sucesso!")
-        db.commit()
-        return redirect(url_for('admin'))
+    if 'user_id' in session and session['is_admin']:
+        if request.method == 'POST':
+            user_id = id_user
+            username = request.form['username']
+            password = request.form['password']
+            email = request.form['email']
+            is_admin = request.form['is_admin']
+            db = connect_to_database()
+            cursor = db.cursor()
+            cursor.execute("""
+                   UPDATE users
+                   SET username=%s, password=%s, email=%s, is_admin=%s
+                   WHERE user_id=%s
+                """, (username, password, email, is_admin, user_id))
+            flash("Dados actualizados com sucesso!")
+            db.commit()
+            return redirect(url_for('admin'))
 
 
 @app.route('/deleteUser/<int:user_id>', methods=['POST','GET'])
 def deleteUser(user_id):
-    if request.method == 'GET':
-        id_user = user_id
-        db = connect_to_database()
-        cursor = db.cursor()
-        cursor.execute("""
-            DELETE FROM users
-            WHERE user_id=%s
-         """, (id_user,))
-        flash("Dados actualizados com sucesso!")
-        db.commit()
-        return redirect(url_for('admin'))
-    return redirect(url_for('user'))
+    if 'user_id' in session and session['is_admin']:
+        if request.method == 'GET':
+            id_user = user_id
+            db = connect_to_database()
+            cursor = db.cursor()
+            cursor.execute("""
+                DELETE FROM users
+                WHERE user_id=%s
+            """, (id_user,))
+            flash("Dados actualizados com sucesso!")
+            db.commit()
+            return redirect(url_for('admin'))
+        return redirect(url_for('user'))
     
 
 
