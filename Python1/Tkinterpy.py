@@ -20,7 +20,7 @@ menu_inicial.state('zoomed') # abre a janela maximizada
 '''
 menu_inicial.state('iconic') # abre a janela e minimiza
 
-menu_inicial.iconbitmap('AnyConv.com__icone.icns')
+# menu_inicial.iconbitmap('AnyConv.com__icone.icns')
 
 
 # mainloop mantem aplicação aberta
