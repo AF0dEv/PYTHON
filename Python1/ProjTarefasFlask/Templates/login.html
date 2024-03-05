@@ -3,6 +3,7 @@
 
 {% include 'base.html' %} <!-- herda de base.html -->
 {% block content %}
+<div class="grid">
     <h2>LOGIN</h2>
     {% with errors = [error] if error else [] %}
     {% if errors %}
@@ -17,17 +18,22 @@
     {% endif %}
 {% endwith %}
 
-<form id="login-form" method="POST">
-    <p>
-    <input type="text" id="username" name="username" placeholder="Username" required><i class="validation"><span></span><span></span></i>
-    </p>
-    <p>
-    <input type="email" id="email" name="email" placeholder="Email Address" required><i class="validation"><span></span><span></span></i>
-    </p>
-    <p>
-    <input type="submit" id="login" value="Login">
-    </p>
-  </form>
+    <form id="login" method="POST" class="form login">
+
+      <div class="form__field">
+        <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
+        <input type="text" id="username" name="username" placeholder="Username" required><i class="validation"><span></span><span></span></i>
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+      </div>
+
+      <div class="form__field">
+        <input type="submit" value="Sign In">
+      </div>
+
+    </form>
+
 {% endblock %}
-```
-falta o codigo css '''

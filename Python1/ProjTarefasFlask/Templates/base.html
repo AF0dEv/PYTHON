@@ -123,38 +123,37 @@
 </div>
 
 <div id="myModalSignUp" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-       <div class="modal-content">
-          <div class="modal-header">
-             <h4 class="modal-title">Por Favor Inserir Dados</h4>
-          </div>
-          <div class="modal-body">
-             <form action="{{ url_for('registo') }}" method="POST">
-               <div class="form-group"></div>
-                   <label>Nome:</label>
-                   <input type="text" class="form-control" name="username" required="1" style="margin: auto; width: 50%;">
-                </div>
-                 <div class="form-group">
-                   <label>Password:</label>
-                   <input type="text" class="form-control" name="password" required="1" style="margin: auto; width: 50%;">
-                </div>
-                 <div class="form-group">
-                   <label>Email:</label>
-                   <input type="text" class="form-control" name="email" required="1" style="margin: auto; width: 50%;">
-                </div>
-                <div class="modal-footer">
-                   <button class="btn btn-primary" type="submit">Inserir Dados</button>
-                   <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                </div>
-             </form>
-          </div>
-       </div>
-    </div>
- </div>
-     </div>
- </div>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Sign Up</h4>
+         </div>
+         <div class="modal-body">
+            <form action="{{ url_for('registo') }}" method="POST">
+               <div class="form-group">
+                  <label>Username:</label>
+                  <input type="text" class="form-control" name="username" required="1" style="margin: auto; width: 50%;">
+               </div>
+               <div class="form-group">
+                  <label>Password:</label>
+                  <input type="password" class="form-control" name="password" required="1" style="margin: auto; width: 50%;">
+               </div>
+               <div class="form-group">
+                  <label>Email:</label>
+                  <input type="email" class="form-control" name="email" required="1" style="margin: auto; width: 50%;">
+               </div>
+               <div class="modal-footer">
+                  <button class="btn btn-primary" type="submit">Sign Up</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
 
- <div id="myModalAddUser" class="modal fade" role="dialog">
+<div id="myModalAddUser" class="modal fade" role="dialog">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -167,30 +166,27 @@
                   <label>Nome:</label>
                   <input type="text" class="form-control" name="username" required="1">
                </div>
-                <div class="form-group">
+               <div class="form-group">
                   <label>Password:</label>
                   <input type="text" class="form-control" name="password" required="1">
                </div>
-                <div class="form-group">
+               <div class="form-group">
                   <label>Email:</label>
                   <input type="text" class="form-control" name="email" required="1">
                </div>
                <div class="form-group">
                   <label>ADMIN:</label>
-                  <input type="number" class="form-control" name="is_admin" required="1"
+                  <input type="number" class="form-control" name="is_admin" required="1">
                </div>
                <div class="form-group">
                   <button class="btn btn-primary" type="submit">Inserir Dados</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                </div>
             </form>
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
          </div>
       </div>
    </div>
 </div>
-    </div>
 </div>
 
 
