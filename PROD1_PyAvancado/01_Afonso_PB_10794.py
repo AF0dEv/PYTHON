@@ -3,18 +3,24 @@ import sqlite3
 from tkinter import messagebox
 
 
-conn = sqlite3.connect('afonso.db')
+conn = sqlite3.connect("afonso.db")
 c = conn.cursor()
 
-c.execute('''CREATE TABLE if not exists pessoas
-             (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, sexo TEXT, telefone TEXT, email TEXT)''')
+c.execute(
+    """CREATE TABLE if not exists pessoas
+             (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, sexo TEXT, telefone TEXT, email TEXT)"""
+)
+
 
 def inserir_dados():
     nome = nome_entry.get()
     sexo = sexo_entry.get()
     telefone = telefone_entry.get()
     email = email_entry.get()
-    c.execute("INSERT INTO pessoas (nome, sexo, telefone, email) VALUES (?, ?, ?, ?)", (nome, sexo, telefone, email))
+    c.execute(
+        "INSERT INTO pessoas (nome, sexo, telefone, email) VALUES (?, ?, ?, ?)",
+        (nome, sexo, telefone, email),
+    )
     conn.commit()
     limpar_campos()
     c.execute("SELECT * FROM pessoas")
@@ -22,7 +28,9 @@ def inserir_dados():
     for row in rows:
         id, nome, sexo, telefone, email = row
         texto.insert(tk.END, f"{id}: {nome}, {sexo}, {telefone}, {email}\n")
-    messagebox.showinfo('Sucesso','Guardado') # .showinfo <-- mostra uma mensagem de informação
+    messagebox.showinfo(
+        "Sucesso", "Guardado"
+    )  # .showinfo <-- mostra uma mensagem de informação
 
 
 def exibir_dados():
@@ -42,35 +50,39 @@ def atualizar_dados():
         telefone = telefone_entry.get()
         email = email_entry.get()
 
-        c.execute("UPDATE pessoas SET nome=?, sexo=?, telefone=?, email=? WHERE id=?", (nome, sexo, telefone, email, id))
-        
+        c.execute(
+            "UPDATE pessoas SET nome=?, sexo=?, telefone=?, email=? WHERE id=?",
+            (nome, sexo, telefone, email, id),
+        )
+
         exibir_dados()
-        
+
         conn.commit()
-        messagebox.showinfo('Sucesso','Atualizado') # .showinfo <-- mostra uma mensagem de informação
+        messagebox.showinfo(
+            "Sucesso", "Atualizado"
+        )  # .showinfo <-- mostra uma mensagem de informação
     except:
-        messagebox.showinfo('Erro','Ocorreu um erro ao atualizar os dados')
+        messagebox.showinfo("Erro", "Ocorreu um erro ao atualizar os dados")
     finally:
         limpar_campos()
         id_entry.delete(0, tk.END)
         exibir_dados()
-    
-        
-    
-    
+
+
 def apagar_dados():
     limpar_campos()
     try:
         id = id_entry.get()
         c.execute("DELETE FROM pessoas WHERE id=?", (id,))
-        
+
         exibir_dados()
 
-        messagebox.showinfo('Sucesso','Apagado') # .showinfo <-- mostra uma mensagem de informação
+        messagebox.showinfo(
+            "Sucesso", "Apagado"
+        )  # .showinfo <-- mostra uma mensagem de informação
 
     finally:
         id_entry.delete(0, tk.END)
-        
 
 
 def limpar_campos():
@@ -79,9 +91,8 @@ def limpar_campos():
     telefone_entry.delete(0, tk.END)
     email_entry.delete(0, tk.END)
     texto.delete(1.0, tk.END)
-    
-    
-    
+
+
 janela = tk.Tk()
 janela.title("Agenda")
 
@@ -100,7 +111,7 @@ email_entry = tk.Entry(janela)
 id_label = tk.Label(janela, text="Id")
 id_entry = tk.Entry(janela)
 
-inserir_button = tk.Button(janela, text="Inserir", command=inserir_dados)    
+inserir_button = tk.Button(janela, text="Inserir", command=inserir_dados)
 
 exibir_button = tk.Button(janela, text="Exibir", command=exibir_dados)
 
