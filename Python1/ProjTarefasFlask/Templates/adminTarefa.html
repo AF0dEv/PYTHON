@@ -4,64 +4,32 @@
 
 
 <div class="container">
-
     <div class="row">
-
         <div class="col md-12">
-
-
-
             <h2>Lista de Utilizadores</h2>
-
-
-
-
-
-
-
-
-
             <table class="table table-striped">
-
-
             <tr>
               <th>Id</th>
               <th>Nome</th>
               <th>OPÇÃO</th>
             </tr>
-
-
-
-
             <tbody>
                 {% for user in users %}
                 <tr>
                     <td>{{user.0}}</td>
                     <td>{{user.1}}</td>
                     <td>
-                         <a href="/userAdmin/{{ user.0 }}" class="btn btn-warning btn-xs">Selecionar</a>
-                         
+                         <a href="/userAdmin/{{ user.0 }}" class="btn btn-warning btn-xs">Selecionar</a>   
                     </td>
                 </tbody>
                 </tr>
-
-
       </div>
-
-
    </div>
-
-
 </div>
-
-
 {% endfor  %}
-
 {% endblock %}
 
-
 <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
-
 <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
 
 

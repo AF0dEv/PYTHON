@@ -337,4 +337,3 @@ if __name__ == '__main__':
     app.run(debug=True) # serve para quando em desenvolvimento verificar erros no codigo
                         # em produçao retirar o debug
 
-# FALTA APAGAR USER, TAREFAS ADMIN
