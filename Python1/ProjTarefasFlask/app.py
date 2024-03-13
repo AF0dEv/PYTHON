@@ -175,16 +175,18 @@ def deleteUser(user_id):
             id_user = user_id
             db = connect_to_database()
             cursor = db.cursor()
-            cursor.execute("""
-                DELETE FROM users
-                WHERE user_id=%s
-            """, (id_user,))
-            flash("Dados actualizados com sucesso!")
-            db.commit()
+            try:
+                cursor.execute("""
+                    DELETE FROM users
+                    WHERE user_id=%s
+                """, (id_user,))
+                flash("Dados actualizados com sucesso!")
+                db.commit()
+            except:
+                flash("Erro ao Eliminar Utilizador! Utilizador tem tarefas associadas!")
             return redirect(url_for('admin'))
         return redirect(url_for('user'))
     
-
 
 
 @app.route('/updateTarefa/<int:id>/<string:descricao>/<int:concluido>',methods=['POST','GET'])
